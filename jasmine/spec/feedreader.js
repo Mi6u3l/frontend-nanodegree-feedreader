@@ -32,6 +32,8 @@ $(function() {
       allFeeds.forEach(function(feed) {
         // expect each feed url is defined 
         expect(feed.url).toBeDefined();
+        //expect each feed url to be formated
+         expect(feed.url).toMatch(/^http(s?)\:\/\//);
         // expect the feed url is not empty
         expect(feed.url.length).not.toBe(0);
 
@@ -42,12 +44,12 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-          it('have names', function(){
-      allFeeds.forEach(function(feed) {
-        // expect each feed name is defined
-        expect(feed.name).toBeDefined();
-        // expect the feed name is not empty
-        expect(feed.name.length).not.toBe(0);
+      it('have names', function(){
+        allFeeds.forEach(function(feed) {
+          // expect each feed name is defined
+          expect(feed.name).toBeDefined();
+          // expect the feed name is not empty
+          expect(feed.name.length).not.toBe(0);
 
       });
     });
@@ -114,13 +116,13 @@ $(function() {
         // before test functions run, retrieve the content in each feed entry
         // afterwards, run loadFeed function with the second feed source
         beforeEach(function (done) {
-          initialContent = $('.feed').find('.entry');
+          initialContent = $('.feed').find('.entry').html();
           loadFeed(1, done);
         });
         // ensure the content has been changed compared to the initial content
         it('content should change', function (done) {
-          newContent = $('.feed').find('.entry');
-          expect(initialContent).not.toBe(newContent);
+          newContent = $('.feed').find('.entry').html();
+          expect(initialContent).not.toEqual(newContent);
           done();
         });
         // load the first feed source after above test is completed
